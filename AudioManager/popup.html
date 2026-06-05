@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+        <link rel="stylesheet" href="popup.css">
+    </head>
+    <body>
+        <div class="m3-container">
+            <!-- Landing view: Inactive Capture -->
+            <div id="landingView" class="view">
+                <div class="landing-hero">
+                    <div class="glow-orb"></div>
+                    <div class="hero-icon-container">
+                        <span class="material-symbols-outlined hero-icon">brand_awareness</span>
+                    </div>
+                    <h1 class="hero-title">Audio Manager</h1>
+                    <p class="hero-subtitle">Optimize your browser tab sound with volume amplification and multi-band dynamic Equalizer.</p>
+                    <button id="activateBtn" class="m3-btn m3-btn-filled">
+                        <span class="material-symbols-outlined">power_settings_new</span>
+                        Activate on Tab
+        
+                    
+                    
+                    </button>
+                </div>
+            </div>
+            <!-- Active view: Sound Controls Dashboard -->
+            <div id="dashboardView" class="view">
+                <header class="m3-header">
+                    <div class="header-left">
+                        <span class="material-symbols-outlined pulse-logo">graphic_eq</span>
+                        <div class="header-text">
+                            <h2>Audio Manager</h2>
+                            <div class="status-indicator">
+                                <span class="status-dot"></span>
+                                <span id="statusText">DETECTING AUDIO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <canvas id="miniVisualizer" width="90" height="28"></canvas>
+                        <button id="deactivateBtn" class="m3-icon-btn" title="Stop tab processing">
+                            <span class="material-symbols-outlined">power_off</span>
+                        </button>
+                    </div>
+                </header>
+                <main class="m3-main">
+                    <!-- Volume Card -->
+                    <section class="m3-card volume-card">
+                        <div class="card-header">
+                            <div class="header-title">
+                                <span class="material-symbols-outlined">volume_up</span>
+                                <h3>Volume Boost</h3>
+                            </div>
+                            <span id="volumeValue" class="value-display">100%</span>
+                        </div>
+                        <div class="slider-wrapper">
+                            <input type="range" id="volumeSlider" min="0" max="200" value="100" class="m3-slider">
+                            <div class="slider-markers">
+                                <span>0%</span>
+                                <span class="marker-center">100%</span>
+                                <span>200%</span>
+                            </div>
+                        </div>
+                        <div class="volume-actions">
+                            <button id="resetBtn" class="m3-btn m3-btn-tonal">
+                                <span class="material-symbols-outlined">settings_backup_restore</span>
+                                Reset to 100%
+            
+                            
+                            
+                            </button>
+                        </div>
+                    </section>
+                    <!-- Equalizer Card -->
+                    <section class="m3-card eq-card">
+                        <div class="card-header">
+                            <div class="header-title">
+                                <span class="material-symbols-outlined">equalizer</span>
+                                <h3>Equalizer</h3>
+                            </div>
+                            <label class="m3-switch">
+                                <input type="checkbox" id="eqToggle">
+                                <span class="m3-switch-slider"></span>
+                            </label>
+                        </div>
+                        <!-- Dynamic collapsable panels -->
+                        <div id="eqPanel" class="eq-panel">
+                            <div class="preset-selector-container">
+                                <label class="input-label">Sound Preset</label>
+                                <div class="m3-dropdown" id="presetDropdown">
+                                    <button class="m3-dropdown-trigger" id="dropdownTrigger">
+                                        <span id="selectedPreset">Flat</span>
+                                        <span class="material-symbols-outlined dropdown-arrow">arrow_drop_down</span>
+                                    </button>
+                                    <div class="m3-dropdown-menu" id="dropdownMenu">
+                                        <div class="m3-dropdown-item active" data-preset="Flat">Flat</div>
+                                        <div class="m3-dropdown-item" data-preset="Bass Booster">Bass Booster</div>
+                                        <div class="m3-dropdown-item" data-preset="Vocal Booster">Vocal Booster</div>
+                                        <div class="m3-dropdown-item" data-preset="Rock">Rock</div>
+                                        <div class="m3-dropdown-item" data-preset="Pop">Pop</div>
+                                        <div class="m3-dropdown-item" data-preset="Classic">Classic</div>
+                                        <div class="m3-dropdown-item" data-preset="Club">Club</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="eq-sliders">
+                                <!-- Band 1 -->
+                                <div class="eq-band">
+                                    <span class="eq-value" id="val0">0dB</span>
+                                    <div class="vertical-slider-container">
+                                        <input type="range" class="vertical-slider" data-index="0" min="-12" max="12" value="0">
+                                    </div>
+                                    <span class="eq-label">60Hz</span>
+                                </div>
+                                <!-- Band 2 -->
+                                <div class="eq-band">
+                                    <span class="eq-value" id="val1">0dB</span>
+                                    <div class="vertical-slider-container">
+                                        <input type="range" class="vertical-slider" data-index="1" min="-12" max="12" value="0">
+                                    </div>
+                                    <span class="eq-label">230Hz</span>
+                                </div>
+                                <!-- Band 3 -->
+                                <div class="eq-band">
+                                    <span class="eq-value" id="val2">0dB</span>
+                                    <div class="vertical-slider-container">
+                                        <input type="range" class="vertical-slider" data-index="2" min="-12" max="12" value="0">
+                                    </div>
+                                    <span class="eq-label">910Hz</span>
+                                </div>
+                                <!-- Band 4 -->
+                                <div class="eq-band">
+                                    <span class="eq-value" id="val3">0dB</span>
+                                    <div class="vertical-slider-container">
+                                        <input type="range" class="vertical-slider" data-index="3" min="-12" max="12" value="0">
+                                    </div>
+                                    <span class="eq-label">4kHz</span>
+                                </div>
+                                <!-- Band 5 -->
+                                <div class="eq-band">
+                                    <span class="eq-value" id="val4">0dB</span>
+                                    <div class="vertical-slider-container">
+                                        <input type="range" class="vertical-slider" data-index="4" min="-12" max="12" value="0">
+                                    </div>
+                                    <span class="eq-label">14kHz</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+            <!-- Unsupported Page Warning View -->
+            <div id="unsupportedView" class="view">
+                <div class="warning-container">
+                    <span class="material-symbols-outlined warning-icon">shield_lock</span>
+                    <h2>System Tab Protected</h2>
+                    <p>Chrome prevents Extensions from injecting custom audio capture into system settings, blank tabs, and the Chrome Web Store due to security constraints.</p>
+                    <p class="warning-tip">Please navigate to a standard webpage like YouTube, Spotify, or Soundcloud to start mixing.</p>
+                </div>
+            </div>
+            <footer class="m3-popup-footer">
+                Made with 💖 by <a href="https://www.facebook.com/mixss14" target="_blank" rel="noopener noreferrer">Mycho Famadico</a>
+            </footer>
+        </div>
+        <script src="popup.js"></script>
+    </body>
+</html>
